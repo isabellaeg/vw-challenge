@@ -25,7 +25,7 @@ export const useGetBreeds = <T>(apiFunc: () => Promise<T>): UseApiReturn<T> => {
     };
 
     fetchData();
-  }, [apiFunc]);
+  }, []);
 
   return { data, loading, error };
 };
