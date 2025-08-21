@@ -1,15 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
-  },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+      "@/*": ["src/*"]
+    },
+    "esModuleInterop": true,
+    "jsx": "react"
+  }
 }
