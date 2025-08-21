@@ -1,36 +1,20 @@
 import React from 'react';
 import Table from '../components/Table/Table';
 import type { Breed } from '../types';
+import { useGetBreeds } from '@/hooks/useGetBreeds';
+import { getBreeds } from '@/services/breedService';
 
-const hardcodedBreeds: Breed[] = [
-  {
-    "id": 1,
-    "name": "Labrador Retriever",
-    "origin": "United Kingdom",
-    "temperament": "Friendly, Outgoing, Trustworthy",
-    "life_span": "10-12 years"
-  },
-  {
-    "id": 2,
-    "name": "French Bulldog",
-    "origin": "France",
-    "temperament": "Affectionate, Patient, Playful",
-    "life_span": "10-12 years"
-  },
-  {
-    "id": 3,
-    "name": "German Shepherd",
-    "origin": "Germany",
-    "temperament": "Confident, Courageous, Smart",
-    "life_span": "9-13 years"
-  }
-];
+
 
 const HomePage: React.FC = () => {
+
+  const { data: breeds, loading, error } = useGetBreeds(getBreeds);
   return (
     <div>
       <h1>Volkswagen Challenge</h1>
-      <Table data={hardcodedBreeds} />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error fetching breeds: {error.message}</p>}
+      <Table data={breeds} />
     </div>
   );
 };
