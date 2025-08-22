@@ -1,19 +1,20 @@
-import React from 'react';
-import Table from '../components/Table/Table';
-import type { Breed } from '../types';
-import { useGetBreeds } from '@/hooks/useGetBreeds';
-import { getBreeds } from '@/services/breedService';
-
-
+import React, { useEffect } from 'react';
+import Table from '@/components/Table/Table';
+import { useBreedStore } from '@/store/breedStore';
 
 const HomePage: React.FC = () => {
+  const { breeds, loading, error, fetchBreeds } = useBreedStore();
 
-  const { data: breeds, loading, error } = useGetBreeds(getBreeds);
+  useEffect(() => {
+    fetchBreeds();
+  }, [fetchBreeds]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div>
-      <h1>Volkswagen Challenge</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error fetching breeds: {error.message}</p>}
+      <h1>Dog Breeds</h1>
       <Table data={breeds} />
     </div>
   );
