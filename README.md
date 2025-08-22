@@ -47,3 +47,9 @@ The project is organized in the following structure:
 - `src/pages/`: Holds top-level components that represent a "page" in the application. This separates page-level logic (like data fetching and layout) from general-purpose components.
 - `src/types/`: A central location for all TypeScript type definitions, facilitates data finding.
 - `src/services/`: upcoming
+
+### 2. Project Architecture
+
+- Zustand: Super easy and clean setup, reduces unnecesary re renders and straightforward usage.
+- Tailwind CSS
+- Vite
