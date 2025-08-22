@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+# This workflow runs on pushes and pull requests to the main branch
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    # Use the latest version of Ubuntu to run the job
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out your repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm" # Cache npm packages for faster builds
+
+      # 3. Install dependencies securely
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Run the linter to check for code quality
+      - name: Run linter
+        run: npm run lint
+
+      # 5. Run tests to ensure everything works
+      - name: Run tests
+        run: npm run test
+
+      # 6. Run the build command to ensure the project can be compiled
+      - name: Run build
+        run: npm run build
