@@ -22,7 +22,7 @@ export const useBreedStore = create<BreedState>((set) => ({
     try {
       const breeds = await getBreeds();
       set({ breeds, loading: false });
-    } catch (error) {
+    } catch (_error) {
       set({ error: 'Failed to fetch breeds.', loading: false });
     }
   },
