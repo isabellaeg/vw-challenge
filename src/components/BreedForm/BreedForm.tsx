@@ -28,7 +28,6 @@ const BreedForm: React.FC<BreedFormProps> = ({
   const { createBreed, updateBreed } = useBreedStore();
   const [formData, setFormData] = useState(initialFormState);
 
-  // Populate form when editing
   useEffect(() => {
     if (initialData) {
       setFormData({

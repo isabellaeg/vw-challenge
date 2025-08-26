@@ -24,10 +24,12 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
   breed,
   triggerRef,
 }) => {
-  const { deleteBreed } = useBreedStore();
+  const { deleteBreed, breeds } = useBreedStore();
   const isTabletAndDesktop = useMediaQuery();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('detail');
+
+  const currentBreed = breed ? breeds.find(b => b.id === breed.id) || breed : null;
 
   useEffect(() => {
     if (!isOpen || !breed) {
@@ -36,7 +38,7 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
     }
   }, [isOpen, breed]);
 
-  if (!breed) return null;
+  if (!currentBreed) return null;
 
   const handleEdit = () => {
     setViewMode('edit');
@@ -47,7 +49,7 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
   };
 
   const handleEditSuccess = () => {
-    setViewMode('detail'); 
+    setViewMode('detail');
   };
 
   const handleDeleteClick = () => {
@@ -55,10 +57,8 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
   };
 
   const handleDeleteConfirm = () => {
-    
     try {
-      deleteBreed(breed.id);
-      
+      deleteBreed(currentBreed.id);
       setShowDeleteConfirm(false);
       onClose();
     } catch (error) {
@@ -113,7 +113,7 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
   };
 
   const getModalTitle = () => {
-    return viewMode === 'edit' ? 'Edit Breed' : breed.name;
+    return viewMode === 'edit' ? 'Edit Breed' : currentBreed.name;
   };
 
   return (
@@ -128,12 +128,12 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
         className={`${isTabletAndDesktop ? 'w-[500px]' : 'w-full'} animate-slide-in-right justify-end`}
       >
         {viewMode === 'detail' ? (
-          <BreedDetail breed={breed} />
+          <BreedDetail breed={currentBreed} />
         ) : (
           <div className="p-6">
             <BreedForm 
               onSuccess={handleEditSuccess}
-              initialData={breed}
+              initialData={currentBreed}
               mode="edit"
             />
           </div>
@@ -145,7 +145,7 @@ const BreedDetailModal: React.FC<BreedDetailModalProps> = ({
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         title="Delete Breed"
-        message={`Are you sure you want to delete "${breed.name}"? This action cannot be undone.`}
+        message={`Are you sure you want to delete "${currentBreed.name}"? This action cannot be undone.`}
         confirmText="Delete"
         cancelText="Cancel"
         variant="danger"
