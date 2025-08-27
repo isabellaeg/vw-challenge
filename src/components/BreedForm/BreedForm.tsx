@@ -74,14 +74,23 @@ const BreedForm: React.FC<BreedFormProps> = ({
   };
 
   const inputClass = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500";
+  const formTitle = mode === 'edit' ? 'Edit Breed' : 'Add New Dog Breed';
 
   return (
     <>
-      <h2 className="text-xl font-bold mb-6 text-pink-500">
-        {mode === 'edit' ? 'Edit Breed' : 'Add New Dog Breed'}
+      <h2 
+        id="form-title"
+        className="text-xl font-bold mb-6 text-pink-500"
+      >
+        {formTitle}
       </h2>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form 
+        onSubmit={handleSubmit} 
+        className="space-y-4"
+        aria-labelledby="form-title"
+        role="form"
+      >
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
             Name *
@@ -93,6 +102,7 @@ const BreedForm: React.FC<BreedFormProps> = ({
             value={formData.name}
             onChange={handleChange}
             required
+            aria-required="true"
             className={inputClass}
           />
         </div>
@@ -205,10 +215,19 @@ const BreedForm: React.FC<BreedFormProps> = ({
         </div>
 
         <div className="flex justify-end space-x-3 pt-6 mt-6 border-t border-gray-200">
-          <Button type="button" variant="secondary" onClick={onSuccess}>
+          <Button 
+            type="button" 
+            variant="secondary" 
+            onClick={onSuccess}
+            aria-label="Cancel form and close"
+          >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
+          <Button 
+            type="submit" 
+            variant="primary"
+            aria-label={mode === 'edit' ? 'Save changes to breed' : 'Create new breed'}
+          >
             {mode === 'edit' ? 'Update Breed' : 'Create Breed'}
           </Button>
         </div>

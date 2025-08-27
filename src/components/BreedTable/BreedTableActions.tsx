@@ -100,6 +100,7 @@ const BreedTableActions: React.FC<BreedTableActionsProps> = ({
             variant="secondary"
             size={isTabletAndDesktop ? 'md' : 'sm'}
             aria-label="Add new breed"
+            aria-haspopup="true"
           >
             {isTabletAndDesktop && 'Add Breed'}
           </Button>

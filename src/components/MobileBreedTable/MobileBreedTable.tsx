@@ -1,4 +1,4 @@
-import React from 'react'; // Add this import
+import React from 'react';
 import BreedCard from "../BreedCard/BreedCard";
 import BreedTableActions from "../BreedTable/BreedTableActions";
 import type { Breed } from '@/types';
@@ -6,7 +6,7 @@ import type { Breed } from '@/types';
 interface SelectionHandlers {
   selectedBreeds: number[];
   isAllSelected: boolean;
-  isIndeterminate: boolean;
+  isIndeterminate: boolean; 
   handleSelectAll: () => void;
   handleDeleteSelected: () => void;
   clearSelection: () => void;
