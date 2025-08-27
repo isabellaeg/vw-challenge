@@ -36,6 +36,14 @@ const BreedTableActions: React.FC<BreedTableActionsProps> = ({
     onDeleteSelected();
     setShowDeleteConfirm(false);
   };
+
+  const handleSelectAllKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      onSelectAll();
+    }
+  };
   
   return (
     <>
@@ -43,6 +51,7 @@ const BreedTableActions: React.FC<BreedTableActionsProps> = ({
         <div className="flex items-center space-x-4">
           <label className="flex items-center space-x-2">
             <input
+              onKeyDown={handleSelectAllKeyDown}
               type="checkbox"
               checked={isAllSelected}
               ref={(el) => {
