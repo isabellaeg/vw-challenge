@@ -1,13 +1,15 @@
 import HomePage from './pages/HomePage/HomePage';
+import Layout from './components/Layout/Layout';
 import './App.css'
 
 function App() {
   
   return (
-    <div className="app-container">
+    <Layout>
       <HomePage />
-    </div>
+    </Layout>
   )
 }
 
-export default App
+export default App;
+

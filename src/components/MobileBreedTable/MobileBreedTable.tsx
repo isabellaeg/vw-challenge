@@ -10,6 +10,7 @@ interface SelectionHandlers {
   handleSelectAll: () => void;
   handleDeleteSelected: () => void;
   clearSelection: () => void;
+  toggleBreedSelection: (id: number) => void;
 }
 
 interface MobileBreedTableProps {
@@ -24,7 +25,9 @@ const MobileBreedTable: React.FC<MobileBreedTableProps> = ({
   selection,
   handleRowClick,
   handleAddNew,
-}) => (
+}) => {
+
+  return (
   <>
     <BreedTableActions
       currentBreedsCount={currentBreeds?.length}
@@ -42,10 +45,13 @@ const MobileBreedTable: React.FC<MobileBreedTableProps> = ({
           key={breed.id}
           breed={breed}
           onClick={() => handleRowClick(breed)}
+          isSelected={selection.selectedBreeds.includes(breed.id)}
+          onToggleSelection={selection.toggleBreedSelection}
+          showCheckbox={true}
         />
       ))}
     </div>
   </>
-);
+)};
 
 export default MobileBreedTable;

@@ -72,9 +72,9 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-pink-500 mb-8">
+      <h2 className="text-3xl sm:text-4xl font-bold text-center text-pink-500 mb-8">
         Dog Encyclopedia
-      </h1>
+      </h2>
       
       <SearchBar 
         value={searchQuery || ''} 

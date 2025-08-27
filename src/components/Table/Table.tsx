@@ -43,17 +43,24 @@ const Table = <T extends { id: number }>({
       <ChevronDown className="w-4 h-4 ml-1" />;
   };
 
-  const handleRowInteraction = (item: T, event: React.MouseEvent | React.KeyboardEvent) => {
-    if ((event.target as HTMLElement).closest('input[type="checkbox"]')) {
-      event.stopPropagation();
+ const handleRowInteraction = (item: T, event: React.MouseEvent | React.KeyboardEvent) => {
+  if ((event.target as HTMLElement).closest('input[type="checkbox"]')) {
+    event.stopPropagation();
+    return;
+  }
+
+  if ('key' in event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const focusedElement = document.activeElement;
+    if (focusedElement && focusedElement.tagName === 'INPUT' && (focusedElement as HTMLInputElement).type === 'checkbox') {
       return;
     }
-
-    if ('key' in event && event.key !== 'Enter' && event.key !== ' ') return;
     
     event.preventDefault();
-    onRowClick?.(item);
-  };
+  }
+  
+  onRowClick?.(item);
+};
 
   return (
     <div className="w-full shadow border-b border-gray-200 sm:rounded-lg overflow-x-auto">
@@ -69,7 +76,7 @@ const Table = <T extends { id: number }>({
                 {onSort ? (
                   <button 
                     onClick={() => onSort(column.key)} 
-                    className="hover:text-gray-700 flex items-center justify-center w-full"
+                    className="hover:text-gray-700 flex items-center justify-center w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
                   >
                     {column.header}
                     {getSortIcon(column.key)}
@@ -97,7 +104,7 @@ const Table = <T extends { id: number }>({
                 className={`
                   hover:bg-gray-50 transition-colors
                   ${isSelected ? 'bg-blue-50' : ''} 
-                  ${isClickable ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset' : ''}
+                  ${isClickable ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-inset' : ''}
                 `}
               >
                 {hasCheckbox && (
@@ -105,8 +112,16 @@ const Table = <T extends { id: number }>({
                     <input
                       type="checkbox"
                       checked={isSelected}
-                      onChange={() => onToggleSelection!(item.id)}
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      onChange={() => onToggleSelection?.(item.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          onToggleSelection?.(item.id);
+                        }
+                      }}
+                    className="h-4 w-4 text-pink-600 border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+                    aria-label={`Select ${item.id}`}
                     />
                   </td>
                 )}
